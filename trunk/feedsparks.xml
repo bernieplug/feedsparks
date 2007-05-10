@@ -2,7 +2,7 @@
 <Module>
 <ModulePrefs 
 	title="FeedBurner Trends"
-	title_url="http://leancode.com/feedsparks"
+	title_url="http://leancode.com/feedsparks/"
 	directory_title="FeedBurner Feed Trends"
 	description="At-a-glance subscription and traffic trends for your FeedBurner feeds. Either turn on the Awareness API in FeedBurner for each of your feeds (preferred), or provide your FeedBurner userid and password to the gadget."
 	render_inline="optional"
@@ -10,12 +10,12 @@
 	author_email="bernie+feedsparks@leancode.com"
 	author_affiliation="Leancode Inc."
 	author_location="Bellevue, WA"
-	screenshot="http://leancode.com/wp-content/uploads/2007/01/Feedsparks.png"
-	thumbnail="http://leancode.com/wp-content/uploads/2007/01/Feedsparks_thumbnail.png"
-	author_photo="http://leancode.com/wp-content/uploads/2007/01/bernie.png"
+	screenshot="http://feedsparks.googlecode.com/svn/trunk/screenshot.png"
+	thumbnail="http://feedsparks.googlecode.com/svn/trunk/thumbnail.png"
+	author_photo="http://feedsparks.googlecode.com/svn/trunk/author_photo.png"
 	author_aboutme="Software developer and entrepreneur. Look me up to talk about your next project."
 	author_quote="Carpe diem!"
-	author_link="http://leancode.com/blog/"
+	author_link="http://leancode.com/"
 	height="150"
 	scrolling = "true"
 >
@@ -81,7 +81,7 @@
 		var data_csv = '';
 		var datapoint = '0';
 		var prevpoint = '0';
-		var trend_image = 'http://bernie.thompson.googlepages.com/back-forth.gif';
+		var trend_image = 'http://feedsparks.googlecode.com/svn/trunk/back-forth.gif';
 		
 		// This is where we parse the statistics from the XML
 		for (var k = 0; k <  nodeList.length; k++) {
@@ -94,8 +94,8 @@
 			data_csv += datapoint + ",";
 		}
 
-		if (parseInt(datapoint) < parseInt(prevpoint)) { trend_image = 'http://bernie.thompson.googlepages.com/arrow-down.gif'; }
-		else if (parseInt(datapoint) > parseInt(prevpoint)) { trend_image = 'http://bernie.thompson.googlepages.com/arrow-up.gif'; }
+		if (parseInt(datapoint) < parseInt(prevpoint)) { trend_image = 'http://feedsparks.googlecode.com/svn/trunk/arrow-down.gif'; }
+		else if (parseInt(datapoint) > parseInt(prevpoint)) { trend_image = 'http://feedsparks.googlecode.com/svn/trunk/arrow-up.gif'; }
 
 		if (feedname.length <= 15 ) { feedname_short = feedname; }
 		else { feedname_short = feedname.substr(0,12) + "..."; }
