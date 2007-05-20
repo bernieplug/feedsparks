@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module>
+<ModulePrefs 
+	title="FeedBurner Trends"
+	title_url="http://leancode.com/feedsparks/"
+	directory_title="FeedBurner Feed Trends"
+	description="At-a-glance subscription and traffic trends for your FeedBurner feeds. Either turn on the Awareness API in FeedBurner for each of your feeds (preferred), or provide your FeedBurner userid and password to the gadget."
+	render_inline="optional"
+	author="Bernie T."
+	author_email="bernie+feedsparks@leancode.com"
+	author_affiliation="Leancode Inc."
+	author_location="Bellevue, WA"
+	screenshot="http://feedsparks.googlecode.com/svn/trunk/screenshot.png"
+	thumbnail="http://feedsparks.googlecode.com/svn/trunk/thumbnail.png"
+	author_photo="http://feedsparks.googlecode.com/svn/trunk/author_photo.png"
+	author_aboutme="Software developer and entrepreneur. Look me up to talk about your next project."
+	author_quote="Carpe diem!"
+	author_link="http://leancode.com/"
+	height="150"
+	scrolling = "true"
+>
+	<Require feature="analytics"/>
+	<Require feature="dynamic-height"/>
+</ModulePrefs>
+<UserPref name="feeds" display_name="Add Feeds" datatype="list" default_value="Leancodecom|lauriethompson"></UserPref>
+<UserPref name="days" display_name="Days of History" datatype="string" default_value="30"></UserPref>
+<UserPref name="attribute" display_name="Show" default_value="circulation" datatype="enum" >
+    <EnumValue value="circulation" />
+    <EnumValue value="hits" />
+</UserPref>
+<UserPref name="userid" display_name="(optional) userid" datatype="string"></UserPref>
+<UserPref name="password" display_name="(optional) password" datatype="string"></UserPref>
+<Content type="html">
+<![CDATA[
+  <div style="display:none;" id=hidden__MODULE_ID__></div>
+  <div style="padding:7px; vertical-align:top; font-size:x-small;"
+       id=t__MODULE_ID__></div>
+  <script>
+	
+  // For each row of results, we have a separate array element
+  // This allows each result to be returned asynchronously without syncronization problems
+  var rows_html = new Array();
+
+  function showMsg__MODULE_ID__(msg) {
+     var htmlmsg = '<div style="text-align:left; padding-top:5px;">' + msg + '</div>';
+     _gel('t__MODULE_ID__').innerHTML = htmlmsg;
+  }
+
+  function generateDateString__MODULE_ID__(delta) {
+    var date = new Date();
+    date.setDate(date.getDate()-delta);
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var days = date.getDate();
+
+    var str = year.toString() + '-';
+    str += (month < 10) ? "0" + month : month;
+    str += '-';
+    str += (days < 10) ? "0" + days : days;
+    return str;
+  }
+
+	function fetchXMLCallback (response, row) {
+		if (response == null || typeof(response) != "object" || response.firstChild == null) {
+			showMsg__MODULE_ID__("FeedBurner stats information is currently not available.  Please try again later.");
+			return;
+		}
+		
+		var prefs = new _IG_Prefs(__MODULE_ID__);
+		var feed_names = prefs.getArray("feeds");
+		var feedname = _esc(feed_names[row]);
+		var attribute = prefs.getString("attribute");
+		var feedname_short = '';
+		
+		var html = '';
+		var nodeList = response.getElementsByTagName("entry");
+		
+		// we have to keep track of max/min for sparklines "limits" param
+		// if we don't set it correctly, bitworking will X out graphs for data > 100
+		var max = 0;
+		var min = 999999999;
+		var data_csv = '';
+		var datapoint = '0';
+		var prevpoint = '0';
+		var trend_image = 'http://feedsparks.googlecode.com/svn/trunk/back-forth.gif';
+		
+		// This is where we parse the statistics from the XML
+		for (var k = 0; k <  nodeList.length; k++) {
+			var node = nodeList.item(k);
+			prevpoint = datapoint;
+			datapoint = node.getAttribute(attribute);
+			var x = parseInt(datapoint);
+			if (x > max) { max = x; };
+			if (x < min) { min = x; };
+			data_csv += datapoint + ",";
+		}
+
+		if (parseInt(datapoint) < parseInt(prevpoint)) { trend_image = 'http://feedsparks.googlecode.com/svn/trunk/arrow-down.gif'; }
+		else if (parseInt(datapoint) > parseInt(prevpoint)) { trend_image = 'http://feedsparks.googlecode.com/svn/trunk/arrow-up.gif'; }
+
+		if (feedname.length <= 15 ) { feedname_short = feedname; }
+		else { feedname_short = feedname.substr(0,12) + "..."; }
+
+		rows_html[row] = '<td><font size=-1><a target=_blank href=http://feeds.feedburner.com/' + feedname + ' title=' + feedname + ' >' + feedname_short + '</a></font></td><td><img src=http://bitworking.org/projects/sparklines/spark.cgi?type=smooth&limits=' + min + ',' + max + '&d=' + data_csv + '&height=20&min-m=true&max-m=true&last-m=true&min-color=red&max-color=blue&last-color=green&step=2 /></td><td>' + datapoint + '</td><td><img src=' + trend_image + ' /></td>';	
+		
+		// We've now iterated through all data entries of this one feedburner feed, and generated the HTML for it
+		// only in IE, will get error assembling a table by setting innerHTML of table rows separately (known IE problem)
+		// so we set the table all at once
+		// We do this here, so HTML DOM is updated asynchronously once for each feed.  If we could do this 
+		// in the feedchart function instead, the DOM would get updated only once, but you'd have to wait for all feeds to load
+		html = '<table style=border:0><tr>' + rows_html.join('</tr><tr>') + '</tr></table>';
+		_gel('t__MODULE_ID__').innerHTML = html;
+		
+		// Tells gadget to resize itself
+		_IG_AdjustIFrameHeight();
+	}
+
+  function feedchart__MODULE_ID__() {
+    var prefs = new _IG_Prefs(__MODULE_ID__);
+
+	// Get the array of Feedburner feed names entered by the user
+	var feed_names = prefs.getArray("feeds");
+	var delta = prefs.getInt("days");
+	var userid = prefs.getString("userid");
+	var password = prefs.getString("password");
+	
+	var date_range = generateDateString__MODULE_ID__(delta) + "," + generateDateString__MODULE_ID__(0);
+	var url_pre = '';
+	
+	if ((userid.length > 0) && (password.length > 0)) {
+		url_pre = "https://api.feedburner.com/awareness/1.0/GetFeedData?user=" + _esc(userid) + "&password=" + _esc(password) + "&uri=";
+	} else {
+		url_pre = "http://api.feedburner.com/awareness/1.0/GetFeedData?uri=";
+	}
+	
+	for (var row = 0; row < feed_names.length; row++) {
+		var url = url_pre + _esc(feed_names[row]) + "&dates=" + date_range;
+
+		_IG_FetchXmlContent(url, _IG_Callback(fetchXMLCallback, row));	
+	}
+  }
+  _IG_RegisterOnloadHandler(feedchart__MODULE_ID__);
+  _IG_Analytics("UA-99119-9", "/feedsparks");
+  </script>
+]]>
+</Content>
+</Module>
+
