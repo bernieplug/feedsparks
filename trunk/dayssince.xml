@@ -32,7 +32,6 @@
 <script>
 	
 	var reminders__MODULE_ID__; // This is a json object of reminders (array of hashes with 'description' & 'lastreset')
-	var edited__MODULE_ID_;
 	var prefs__MODULE_ID__;
 	var minutes = 1000*60;
 	var hours = minutes*60;
@@ -45,15 +44,14 @@
 	  if (reminders == "")
 	    reminders__MODULE_ID__ = {"array":[]};
 	  else
-	    reminders__MODULE_ID__ = JSON.parse(reminders);
-	  edited__MODULE_ID__ = false;
+	    reminders__MODULE_ID__ = reminders.parseJSON();
 	  createTable__MODULE_ID__();
 	}
 	
 	_IG_RegisterOnloadHandler(onLoad__MODULE_ID__);
 
 	function saveReminders__MODULE_ID__(){
-		prefs__MODULE_ID__.set("Reminders", JSON.stringify(reminders__MODULE_ID__));
+		prefs__MODULE_ID__.set("reminders", reminders__MODULE_ID__.array.toJSONString());
 		_gel("newReminderInput__MODULE_ID__").focus();
 	}
 
@@ -64,7 +62,7 @@
 		date.setDate(date.getDate()-daysago);
 		
 		_gel("newReminderInput__MODULE_ID__").value = "";
-		if (reminder == "")
+		if (description == "")
 			return;
 		reminders__MODULE_ID__.array[reminders__MODULE_ID__.array.length] =
 			{"description": description, "lastreset": date };
@@ -74,8 +72,6 @@
 	}
 
 	function deleteReminder__MODULE_ID__(number) {
-		if (edited__MODULE_ID__)
-			return;
 		var beginning = reminders__MODULE_ID__.array.slice(0, number);
 		var end = reminders__MODULE_ID__.array.slice(number + 1,
 		                                      reminders__MODULE_ID__.array.length);
@@ -128,7 +124,7 @@
 			"<tr id=\"row" + number + "__MODULE_ID__\"" +
 			rowClass__MODULE_ID__(number) + ">" +
 			"<td class=dayssince_ds__MODULE_ID__>" + 
-			daysssince +
+			Math.floor(dayssince) +
 			"</td>" +
 			"<td class=description_td__MODULE_ID__>" +
 			escape(description) +
@@ -162,13 +158,13 @@
 		return html;
 	}
 
-    function getRow__MODULE_ID__(number) {
-      return _gel("row" + number + "__MODULE_ID__");
-    }
+	function getRow__MODULE_ID__(number) {
+		return _gel("row" + number + "__MODULE_ID__");
+	}
 
-    function getCol__MODULE_ID__(row, index) {
-      return row.childNodes.item(index);
-    }
+	function getCol__MODULE_ID__(row, index) {
+		return row.childNodes.item(index);
+	}
 
 	_IG_Analytics("UA-99119-12", "/dayssince");
 	
@@ -180,9 +176,6 @@
                  newReminderInput__MODULE_ID__.value, 0)">
     <table cellspacing=0>
       <tr>
-      <td id="new_reminder_ds__MODULE_ID__">
-        <nobr>__MSG_new_item__</nobr>
-      </td>
       <td style='width:100%' >
         <input id="newReminderInput__MODULE_ID__" type="text"
                style='width:100%'>
@@ -191,7 +184,8 @@
         <input type = "button" value="__MSG_add__"
                onclick = "javascript:addReminder__MODULE_ID__(
                          document.newReminderForm__MODULE_ID__.
-                         newReminderInput__MODULE_ID__.value, 0)">
+                         newReminderInput__MODULE_ID__.value,
+						 0)">
       </td>
     </tr>
   </table>
