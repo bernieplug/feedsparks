@@ -144,8 +144,8 @@
 		
 		var url = url_pre + feedname + "&dates=" + date_range;
 
-		_IG_FetchXmlContent(_IG_GetCachedUrl(url), _IG_Callback(fetchXMLCallback, row));
-		//_IG_FetchXmlContent(url, _IG_Callback(fetchXMLCallback, row));
+		//_IG_FetchXmlContent(_IG_GetCachedUrl(url), _IG_Callback(fetchXMLCallback, row));
+		_IG_FetchXmlContent(url, _IG_Callback(fetchXMLCallback, row));
 	}
   }
   _IG_RegisterOnloadHandler(feedchart__MODULE_ID__);
