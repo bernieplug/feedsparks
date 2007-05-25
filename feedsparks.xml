@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Module>
 <ModulePrefs 
-	title="FeedBurner Trends"
+	title="Feedsparks"
 	title_url="http://leancode.com/feedsparks/"
-	directory_title="FeedBurner Feed Trends"
+	directory_title="Feedsparks: FeedBurner Trends"
 	description="At-a-glance subscription and traffic trends for your FeedBurner feeds in Tufte's excellent, condensed sparklines format. To use it with your feeds, either turn on the Awareness API in FeedBurner for each of your feeds (preferred), or provide your FeedBurner userid and password to the gadget. Currently at $Rev$"
 	render_inline="optional"
 	author="Bernie T."
@@ -144,6 +144,7 @@
 		
 		var url = url_pre + feedname + "&dates=" + date_range;
 
+		// The cached version fails for some reason
 		//_IG_FetchXmlContent(_IG_GetCachedUrl(url), _IG_Callback(fetchXMLCallback, row));
 		_IG_FetchXmlContent(url, _IG_Callback(fetchXMLCallback, row));
 	}
