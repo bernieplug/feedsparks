@@ -106,7 +106,7 @@
 		}
 		var sparkline_image = _IG_GetImageUrl('http://bitworking.org/projects/sparklines/spark.cgi?type=smooth&limits=' + min + ',' + max + '&d=' + data_csv + '&height=20&min-m=true&max-m=true&last-m=true&' + 'min-color=red&max-color=blue&last-color=green&step=2');
 
-		rows_html[row] = '<td><a target=_blank href=http://feeds.feedburner.com/' + feedname + ' title=' + feedname + ' >' + displayname + '</a></td><td><img src="' + sparkline_image + '" /></td><td>' + datapoint + '</td><td><img src=' + trend_image + ' /></td>';	
+		rows_html[row] = '<td><a target=_blank href=http://feeds.feedburner.com/' + feedname + ' title=' + feedname + ' ><font size=-1>' + displayname + '</font></a></td><td><img src="' + sparkline_image + '" /></td><td>' + datapoint + '</td><td><img src=' + trend_image + ' /></td>';	
 		
 		// We've now iterated through all data entries of this one feedburner feed, and generated the HTML for it
 		// only in IE, will get error assembling a table by setting innerHTML of table rows separately (known IE problem)
