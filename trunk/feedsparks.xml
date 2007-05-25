@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Module>
 <ModulePrefs 
-	title="Feedsparks: FeedBurner Trends"
+	title="Feedsparks"
 	title_url="http://leancode.com/feedsparks/"
 	directory_title="Feedsparks: FeedBurner Trends"
 	description="At-a-glance subscription and traffic trends for your FeedBurner feeds in Tufte's excellent, condensed sparklines format. To use it with your feeds, either turn on the Awareness API in FeedBurner for each of your feeds (preferred), or provide your FeedBurner userid and password to the gadget. Currently at $Rev$"
