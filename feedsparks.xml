@@ -73,7 +73,7 @@
 		
 		if (response == null || typeof(response) != "object" || response.firstChild == null) {
 			var message = new _IG_MiniMessage(__MODULE_ID__);
-			message.createDismissibleMessage("FeedBurner failed stats request for " + feedname + ". Please try again later.");
+			message.createTimerMessage("FeedBurner failed stats request for " + feedname + ". Please try again later.",5);
 			return;
 		}
 		
