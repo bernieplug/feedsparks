@@ -21,6 +21,7 @@
 >
 	<Require feature="analytics"/>
 	<Require feature="dynamic-height"/>
+	<Require feature="minimessage" /> 
 </ModulePrefs>
 <UserPref name="feeds" display_name="Add Feeds (feedburner name, display name)" datatype="list" default_value="Leancodecom,Leancode|lauriethompson,Laurie Thompson"></UserPref>
 <UserPref name="days" display_name="Days of History" datatype="string" default_value="30"></UserPref>
@@ -41,11 +42,7 @@
   // For each row of results, we have a separate array element
   // This allows each result to be returned asynchronously without syncronization problems
   var rows_html = new Array();
-
-  function showMsg__MODULE_ID__(msg) {
-     var htmlmsg = '<div style="text-align:left; padding-top:5px;">' + msg + '</div>';
-     _gel('t__MODULE_ID__').innerHTML = htmlmsg;
-  }
+  var pending_requests = 0;
 
   function generateDateString__MODULE_ID__(delta) {
     var date = new Date();
@@ -62,10 +59,9 @@
   }
 
 	function fetchXMLCallback (response, row) {
-		if (response == null || typeof(response) != "object" || response.firstChild == null) {
-			showMsg__MODULE_ID__("FeedBurner stats information is currently not available.  Please try again later.");
-			return;
-		}
+	
+		// decrement our pending requests counter 
+		pending_requests = --pending_requests;
 		
 		var prefs = new _IG_Prefs(__MODULE_ID__);
 		var feed_names = prefs.getArray("feeds");
@@ -74,6 +70,12 @@
 		var displayname = (feedname_array.length > 1) ? _hesc(feedname_array[1]) : _hesc(feedname_array[0]);
 		var attribute = prefs.getString("attribute");
 		var nameLimit = prefs.getInt("nameLimit");
+		
+		if (response == null || typeof(response) != "object" || response.firstChild == null) {
+			var message = new _IG_MiniMessage(__MODULE_ID__);
+			message.createDismissibleMessage("FeedBurner failed stats request for " + feedname + ". Please try again later.");
+			return;
+		}
 		
 		var html = '';
 		var nodeList = response.getElementsByTagName("entry");
@@ -116,8 +118,11 @@
 		html = '<table style=border:0><tr>' + rows_html.join('</tr><tr>') + '</tr></table>';
 		_gel('t__MODULE_ID__').innerHTML = html;
 		
-		// Tells gadget to resize itself
-		_IG_AdjustIFrameHeight();
+		// Once all the FetchXmlContent calls return, resize gadget vertically
+		if (pending_requests <= 0) {
+			// Tells gadget to resize itself
+			_IG_AdjustIFrameHeight();
+		}
 	}
 
   function feedchart__MODULE_ID__() {
@@ -137,6 +142,8 @@
 	} else {
 		url_pre = "http://api.feedburner.com/awareness/1.0/GetFeedData?uri=";
 	}
+	
+	pending_requests = feed_names.length;
 	
 	for (var row = 0; row < feed_names.length; row++) {
 		var feedname_array = feed_names[row].split(",");
