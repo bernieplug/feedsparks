@@ -41,7 +41,7 @@
 	
   // For each row of results, we have a separate array element
   // This allows each result to be returned asynchronously without syncronization problems
-  var rows_html = new Array();
+  var rows_html__MODULE_ID__ = new Array();
   var pending_requests = 0;
 
   function generateDateString__MODULE_ID__(delta) {
@@ -108,14 +108,14 @@
 		}
 		var sparkline_image = _IG_GetImageUrl('http://bitworking.org/projects/sparklines/spark.cgi?type=smooth&limits=' + min + ',' + max + '&d=' + data_csv + '&height=20&min-m=true&max-m=true&last-m=true&' + 'min-color=red&max-color=blue&last-color=green&step=2');
 
-		rows_html[row] = '<td><a target=_blank href=http://feeds.feedburner.com/' + feedname + ' title=' + feedname + ' ><font size=-1>' + displayname + '</font></a></td><td><img src="' + sparkline_image + '" /></td><td>' + datapoint + '</td><td><img src=' + trend_image + ' /></td>';	
+		rows_html__MODULE_ID__[row] = '<td><a target=_blank href=http://feeds.feedburner.com/' + feedname + ' title=' + feedname + ' ><font size=-1>' + displayname + '</font></a></td><td><img src="' + sparkline_image + '" /></td><td>' + datapoint + '</td><td><img src=' + trend_image + ' /></td>';	
 		
 		// We've now iterated through all data entries of this one feedburner feed, and generated the HTML for it
 		// only in IE, will get error assembling a table by setting innerHTML of table rows separately (known IE problem)
 		// so we set the table all at once
 		// We do this here, so HTML DOM is updated asynchronously once for each feed.  If we could do this 
 		// in the feedchart function instead, the DOM would get updated only once, but you'd have to wait for all feeds to load
-		html = '<table style=border:0><tr>' + rows_html.join('</tr><tr>') + '</tr></table>';
+		html = '<table style=border:0><tr>' + rows_html__MODULE_ID__.join('</tr><tr>') + '</tr></table>';
 		_gel('t__MODULE_ID__').innerHTML = html;
 		
 		// Once all the FetchXmlContent calls return, resize gadget vertically
