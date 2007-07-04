@@ -28,6 +28,7 @@
 <UserPref name="attribute" display_name="Show" default_value="circulation" datatype="enum" >
     <EnumValue value="circulation" />
     <EnumValue value="hits" />
+    <EnumValue value="reach" />
 </UserPref>
 <UserPref name="nameLimit" display_name="# chars to display" datatype="string" default_value="15"></UserPref>
 <UserPref name="userid" display_name="(optional) userid" datatype="string"></UserPref>
