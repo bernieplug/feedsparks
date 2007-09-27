@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Module>
 <ModulePrefs 
-	title="__MSG_Feedsparks"
+	title="__MSG_Feedsparks__"
 	title_url="http://leancode.com/feedsparks/"
-	directory_title="__MSG_DirectoryTitle"
-	description="__MSG_Description"
+	directory_title="__MSG_DirectoryTitle__"
+	description="__MSG_Description__"
 	render_inline="optional"
 	author="Bernie T."
 	author_email="widgets@leancode.com"
@@ -24,16 +24,16 @@
 	<Require feature="dynamic-height"/>
 	<Require feature="minimessage" /> 
 </ModulePrefs>
-<UserPref name="feeds" display_name="__MSG_AddFeeds" datatype="list" default_value="Leancodecom,Leancode|lauriethompson,Laurie Thompson"></UserPref>
-<UserPref name="days" display_name="__MSG_DaysOfHistory" datatype="string" default_value="30"></UserPref>
-<UserPref name="attribute" display_name="__MSG_Show" default_value="circulation" datatype="enum" >
+<UserPref name="feeds" display_name="__MSG_AddFeeds__" datatype="list" default_value="Leancodecom,Leancode|lauriethompson,Laurie Thompson"></UserPref>
+<UserPref name="days" display_name="__MSG_DaysOfHistory__" datatype="string" default_value="30"></UserPref>
+<UserPref name="attribute" display_name="__MSG_Show__" default_value="circulation" datatype="enum" >
     <EnumValue value="circulation" />
     <EnumValue value="hits" />
     <EnumValue value="reach" />
 </UserPref>
-<UserPref name="nameLimit" display_name="__MSG_NumChars" datatype="string" default_value="15"></UserPref>
-<UserPref name="userid" display_name="__MSG_UserId" datatype="string"></UserPref>
-<UserPref name="password" display_name="__MSG_Password" datatype="string"></UserPref>
+<UserPref name="nameLimit" display_name="__MSG_NumChars__" datatype="string" default_value="15"></UserPref>
+<UserPref name="userid" display_name="__MSG_UserId__" datatype="string"></UserPref>
+<UserPref name="password" display_name="__MSG_Password__" datatype="string"></UserPref>
 <Content type="html">
 <![CDATA[
   <div style="display:none;" id=hidden__MODULE_ID__></div>
@@ -75,7 +75,7 @@
 		
 		if (response == null || typeof(response) != "object" || response.firstChild == null) {
 			var message = new _IG_MiniMessage(__MODULE_ID__);
-			message.createTimerMessage(feedname + ":" + "__MSG_FailedRequest" + "__MSG_TryLater",5);
+			message.createTimerMessage(feedname + ":" + "__MSG_FailedRequest__" + "__MSG_TryLater__",5);
 			return;
 		}
 		
