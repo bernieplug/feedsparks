@@ -1,0 +1,13 @@
+<messagebundle>
+	<msg name="Feedsparks">Feedsparks</msg>
+	<msg name="DirectoryTitle">Feedsparks: FeedBurner Trends</msg>
+	<msg name="Description">At-a-glance subscription and traffic trends for your FeedBurner feeds in Tufte's excellent, condensed sparklines format. To use it with your feeds, either turn on the Awareness API in FeedBurner for each of your feeds (preferred), or provide your FeedBurner userid and password to the gadget.</msg>
+	<msg name="AddFeeds">Add Feeds (feedburner name, display name)</msg>
+	<msg name="DaysOfHistory">Days of History</msg>
+	<msg name="Show">Show</msg>
+	<msg name="NumChars"># chars to display</msg>
+	<msg name="UserId">(optional) userid</msg>
+	<msg name="Password">(optional) password</msg>
+	<msg name="FailedRequest">FeedBurner failed stats request.</msg>
+	<msg name="TryLater">Please try again later.</msg>
+</messagebundle>
