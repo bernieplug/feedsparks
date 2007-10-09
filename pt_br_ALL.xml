@@ -1,0 +1,13 @@
+<messagebundle> 
+ <msg name="Feedsparks">Feedsparks</msg> 
+ <msg name="DirectoryTitle">Feedsparks: Tendências do FeedBurner</msg> 
+ <msg name="Description">Tendências de tráfego e assinatura instantânea para seus feeds do FeedBurner no excelente formato sparkline condensado do Tufte.    Para usá-lo com seus feeds, ative o reconhecimento de API do FeedBurner para cada um de seus feeds preferidos ou forneça seu ID de usuário e senha do FeedBurner para o gadget. </msg> 
+ <msg name="AddFeeds">Adicionar Feeds (nome do feedburner, nome de exibição)</msg> 
+ <msg name="DaysOfHistory"> Dias de Histórico</msg> 
+ <msg name="Show">Exibir</msg> 
+ <msg name="NumChars">No. de caracteres a exibir</msg> 
+ <msg name="UserId">(opcional) ID de usuário</msg> 
+ <msg name="Password">(opcional) senha</msg> 
+ <msg name="FailedRequest">Solicitação de estatística de falha do FeedBurner.</msg> 
+ <msg name="TryLater">Tente novamente mais tarde.</msg> 
+</messagebundle>
