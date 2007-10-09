@@ -1,0 +1,13 @@
+<messagebundle> 
+ <msg name="Feedsparks">Feedsparks</msg> 
+ <msg name="DirectoryTitle">Feedsparks: Tendencias de FeedBurner </msg> 
+ <msg name="Description">Resumen de tendencias de tráfico y suscripciones para sus alimentaciones de FeedBurner en el excelente formato de palabras gráficas o sparklines condensadas de Tufte. Para utilizar sus alimentaciones, active el Awareness API en FeedBurner para cada una de sus alimentaciones (preferidas) o ingrese su ID de usuario y contraseña de FeedBurner al gadget.</msg> 
+ <msg name="AddFeeds">Agregar alimentaciones (nombre del feedburner, nombre para mostrar)</msg> 
+ <msg name="DaysOfHistory">Días del historial </msg> 
+ <msg name="Show">Mostrar</msg> 
+ <msg name="NumChars">No. de caracteres para mostrar </msg> 
+ <msg name="UserId">(opcional) ID de usuario</msg> 
+ <msg name="Password">(opcional) contraseña</msg> 
+ <msg name="FailedRequest">Error de FeedBurner al solicitar estadísticas.</msg> 
+ <msg name="TryLater">Intente nuevamente más tarde.</msg> 
+</messagebundle>

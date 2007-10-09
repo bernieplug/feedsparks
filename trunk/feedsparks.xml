@@ -20,6 +20,8 @@
 	scrolling = "true"
 >
     <Locale messages="http://feedsparks.googlecode.com/svn/trunk/ALL_ALL.xml"/>
+	<Locale lang="es" messages="http://feedsparks.googlecode.com/svn/trunk/es_ALL.xml"/>
+	<Locale lang="pt-BR" messages="http://feedsparks.googlecode.com/svn/trunk/pt_br_ALL.xml"/>
 	<Require feature="analytics"/>
 	<Require feature="dynamic-height"/>
 	<Require feature="minimessage" /> 
