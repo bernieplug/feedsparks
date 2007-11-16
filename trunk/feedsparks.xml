@@ -26,25 +26,25 @@
 	<Require feature="dynamic-height"/>
 	<Require feature="minimessage" /> 
 </ModulePrefs>
-<UserPref name="feeds" display_name="__MSG_AddFeeds__" datatype="list" default_value="Leancodecom,Leancode|lauriethompson,Laurie Thompson"></UserPref>
+<UserPref name="feeds" display_name="__MSG_AddFeeds__" datatype="list" default_value="Leancodecom,Leancode|Techcrunch"></UserPref>
 <UserPref name="days" display_name="__MSG_DaysOfHistory__" datatype="string" default_value="30"></UserPref>
 <UserPref name="attribute" display_name="__MSG_Show__" default_value="circulation" datatype="enum" >
     <EnumValue value="circulation" />
     <EnumValue value="hits" />
     <EnumValue value="reach" />
 </UserPref>
-<UserPref name="nameLimit" display_name="__MSG_NumChars__" datatype="string" default_value="15"></UserPref>
+<UserPref name="nameLimit" display_name="__MSG_NumChars__" datatype="hidden" default_value="15"></UserPref>
 <UserPref name="userid" display_name="__MSG_UserId__" datatype="string"></UserPref>
 <UserPref name="password" display_name="__MSG_Password__" datatype="string"></UserPref>
 <Content type="html">
 <![CDATA[
   <div style="display:none;" id=hidden__MODULE_ID__></div>
   <div style="padding:7px; vertical-align:top; font-size:xx-small; font-family: sans-serif"
-       id=t__MODULE_ID__></div>
+       id=t__MODULE_ID__>Loading ...</div>
   <script>
 	
   // For each row of results, we have a separate array element
-  // This allows each result to be returned asynchronously without syncronization problems
+  // This allows each result to be returned asynchronously without synchronization problems
   var rows_html__MODULE_ID__ = new Array();
   var pending_requests = 0;
 
@@ -161,7 +161,7 @@
 	}
   }
   _IG_RegisterOnloadHandler(feedchart__MODULE_ID__);
-  _IG_Analytics("UA-99119-12", "/feedsparks");
+  _IG_Analytics("UA-99119-16", "/feedsparks");
   </script>
 ]]>
 </Content>
