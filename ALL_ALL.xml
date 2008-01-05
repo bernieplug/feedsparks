@@ -10,4 +10,5 @@
 	<msg name="Password">(optional) password</msg>
 	<msg name="FailedRequest">FeedBurner failed stats request.</msg>
 	<msg name="TryLater">Please try again later.</msg>
+	<msg name="ChartHeight">Chart Height</msg>
 </messagebundle>

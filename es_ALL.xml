@@ -9,5 +9,6 @@
  <msg name="UserId">(opcional) ID de usuario</msg> 
  <msg name="Password">(opcional) contraseña</msg> 
  <msg name="FailedRequest">Error de FeedBurner al solicitar estadísticas.</msg> 
- <msg name="TryLater">Intente nuevamente más tarde.</msg> 
+ <msg name="TryLater">Intente nuevamente más tarde.</msg>
+ <msg name="ChartHeight">Gráfico de la Altura</msg>
 </messagebundle>
