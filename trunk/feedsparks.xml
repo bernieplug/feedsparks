@@ -153,7 +153,7 @@
 		// so we set the table all at once
 		// We do this here, so HTML DOM is updated asynchronously once for each feed.  If we could do this 
 		// in the feedchart function instead, the DOM would get updated only once, but you'd have to wait for all feeds to load
-		html = '<table style=\"border:0\" cellspacing=0 cellpadding=0><tr>' + rows_html__MODULE_ID__.join('</tr><tr>') + '</tr></table>';
+		html = '<table style=\"border:0; width=100%\" cellspacing=0 cellpadding=0 width=100%><tr>' + rows_html__MODULE_ID__.join('</tr><tr>') + '</tr></table>';
 		_gel('t__MODULE_ID__').innerHTML = html;
 		
 		// Once all the FetchXmlContent calls return, resize gadget vertically
