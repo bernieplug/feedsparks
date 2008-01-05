@@ -47,6 +47,7 @@
   // This allows each result to be returned asynchronously without synchronization problems
   var rows_html__MODULE_ID__ = new Array();
   var pending_requests = 0;
+  var simpleEncoding = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
   function generateDateString__MODULE_ID__(delta) {
     var date = new Date();
@@ -61,6 +62,34 @@
     str += (days < 10) ? "0" + days : days;
     return str;
   }
+
+	function simpleEncode(values, minValue, maxValue) {
+	
+		var chartData = ['s:'];
+		maxValue = maxValue - minValue;
+		for (var i = 0; i < values.length; i++) {
+			var currentValue = values[i] - minValue;
+			if (!isNaN(currentValue) && currentValue >= 0) {
+				chartData.push(simpleEncoding.charAt(Math.round((simpleEncoding.length-1) * currentValue / maxValue )));
+				}
+			else {
+				chartData.push('_');
+			}
+		}
+		return chartData.join('');
+	}
+
+	function getChartUrl(values, minValue, maxValue, min_index, max_index, last_index) {
+		
+		var chd = "&chd=" + simpleEncode(values, minValue, maxValue);
+		var chs = "&chs=" + (last_index*2 + 2) + "x20";
+		var chm = "&chm=s,ff0000,0," + min_index + ".0,4|s,00ff00,0," + max_index + ".0,4|s,0000ff,0," + (last_index-1) + ".0,4";
+	
+		var url = "http://chart.apis.google.com/chart?cht=lc&chco=666666&chls=1,1,0&chxt=r,x,y&chxs=0,ffffff,11,0,_|1,ffffff,1,0,_|2,ffffff,1,0,_&chxl=0:|i|1:||2:||" + chd + chs + chm;
+		
+		return _IG_GetImageUrl(url);
+		//return url;
+	}
 
 	function fetchXMLCallback (response, row) {
 	
@@ -86,8 +115,11 @@
 		
 		// we have to keep track of max/min for sparklines "limits" param
 		// if we don't set it correctly, bitworking will X out graphs for data > 100
+		var min_index = 0;
+		var max_index = 0;
 		var max = 0;
 		var min = 999999999;
+		var data = [];
 		var data_csv = '';
 		var datapoint = '0';
 		var prevpoint = '0';
@@ -99,10 +131,12 @@
 			prevpoint = datapoint;
 			datapoint = node.getAttribute(attribute);
 			var x = parseInt(datapoint);
-			if (x > max) { max = x; };
-			if (x < min) { min = x; };
-			data_csv += datapoint + ",";
+			if (x > max) { max = x; max_index = k};
+			if (x < min) { min = x; min_index = k};
+			data.push(x);
 		}
+		
+		data_csv = data.join(",");
 
 		if (parseInt(datapoint) < parseInt(prevpoint)) { trend_image = _IG_GetImageUrl('http://feedsparks.googlecode.com/svn/trunk/arrow-down.gif'); }
 		else if (parseInt(datapoint) > parseInt(prevpoint)) { trend_image = _IG_GetImageUrl('http://feedsparks.googlecode.com/svn/trunk/arrow-up.gif'); }
@@ -110,16 +144,16 @@
 		if (displayname.length > nameLimit ) { 
 			displayname = displayname.substr(0,(nameLimit-3)) + "..."; 
 		}
-		var sparkline_image = _IG_GetImageUrl('http://bitworking.org/projects/sparklines/spark.cgi?type=smooth&limits=' + min + ',' + max + '&d=' + data_csv + '&height=20&min-m=true&max-m=true&last-m=true&' + 'min-color=red&max-color=blue&last-color=green&step=2');
+		var sparkline_image = getChartUrl(data, min, max, min_index, max_index, nodeList.length);
 
-		rows_html__MODULE_ID__[row] = '<td><a target=_blank href=http://feeds.feedburner.com/' + feedname + ' title=' + feedname + ' ><font size=-1>' + displayname + '</font></a></td><td><img src="' + sparkline_image + '" /></td><td>' + datapoint + '</td><td><img src=' + trend_image + ' /></td>';	
+		rows_html__MODULE_ID__[row] = '<td><a target=_blank href=http://feeds.feedburner.com/' + feedname + ' title=' + feedname + ' ><font size=-1>' + displayname + ' </font></a></td><td><img src="' + sparkline_image + '" /></td><td>' + datapoint + '&nbsp;</td><td><img src=' + trend_image + ' /></td>';	
 		
 		// We've now iterated through all data entries of this one feedburner feed, and generated the HTML for it
 		// only in IE, will get error assembling a table by setting innerHTML of table rows separately (known IE problem)
 		// so we set the table all at once
 		// We do this here, so HTML DOM is updated asynchronously once for each feed.  If we could do this 
 		// in the feedchart function instead, the DOM would get updated only once, but you'd have to wait for all feeds to load
-		html = '<table style=border:0><tr>' + rows_html__MODULE_ID__.join('</tr><tr>') + '</tr></table>';
+		html = '<table style=\"border:0\" cellspacing=0 cellpadding=0><tr>' + rows_html__MODULE_ID__.join('</tr><tr>') + '</tr></table>';
 		_gel('t__MODULE_ID__').innerHTML = html;
 		
 		// Once all the FetchXmlContent calls return, resize gadget vertically
