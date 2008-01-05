@@ -27,12 +27,12 @@
 	<Require feature="minimessage" /> 
 </ModulePrefs>
 <UserPref name="feeds" display_name="__MSG_AddFeeds__" datatype="list" default_value="Leancodecom,Leancode|Techcrunch"></UserPref>
-<UserPref name="days" display_name="__MSG_DaysOfHistory__" datatype="string" default_value="30"></UserPref>
 <UserPref name="attribute" display_name="__MSG_Show__" default_value="circulation" datatype="enum" >
     <EnumValue value="circulation" />
     <EnumValue value="hits" />
     <EnumValue value="reach" />
 </UserPref>
+<UserPref name="days" display_name="__MSG_DaysOfHistory__" datatype="string" default_value="30"></UserPref>
 <UserPref name="chartHeight" display_name="__MSG_ChartHeight__" datatype="string" default_value="20"></UserPref>
 <UserPref name="nameLimit" display_name="__MSG_NumChars__" datatype="hidden" default_value="15"></UserPref>
 <UserPref name="userid" display_name="__MSG_UserId__" datatype="string"></UserPref>
