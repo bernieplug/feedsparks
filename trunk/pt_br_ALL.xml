@@ -10,4 +10,5 @@
  <msg name="Password">(opcional) senha</msg> 
  <msg name="FailedRequest">Solicitação de estatística de falha do FeedBurner.</msg> 
  <msg name="TryLater">Tente novamente mais tarde.</msg> 
+ <msg name="ChartHeight">Chart Altura</msg>
 </messagebundle>
