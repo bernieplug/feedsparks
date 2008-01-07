@@ -17,7 +17,7 @@
 	author_quote="What goes up must come down (at least with my subscribers)"
 	author_link="http://leancode.com/"
 	height="150"
-	scrolling = "true"
+	scrolling = "false"
 >
     <Locale messages="http://feedsparks.googlecode.com/svn/trunk/ALL_ALL.xml"/>
 	<Locale lang="es" messages="http://feedsparks.googlecode.com/svn/trunk/es_ALL.xml"/>
@@ -39,8 +39,7 @@
 <UserPref name="password" display_name="__MSG_Password__" datatype="string"></UserPref>
 <Content type="html">
 <![CDATA[
-  <div style="display:none;" id=hidden__MODULE_ID__></div>
-  <div style="padding:7px; vertical-align:top; font-size:xx-small; font-family: sans-serif"
+  <div style="padding:7px; vertical-align:top; font-size:xx-small; font-family: sans-serif; overflow:visble"
        id=t__MODULE_ID__>Loading ...</div>
   <script>
 	
@@ -155,7 +154,7 @@
 		// so we set the table all at once
 		// We do this here, so HTML DOM is updated asynchronously once for each feed.  If we could do this 
 		// in the feedchart function instead, the DOM would get updated only once, but you'd have to wait for all feeds to load
-		html = '<table style=\"border:0; width=100%\" cellspacing=0 cellpadding=0 width=100%><tr>' + rows_html__MODULE_ID__.join('</tr><tr>') + '</tr></table>';
+		html = '<table style=\"border:0; width:100%\" cellspacing=0 cellpadding=0><tr>' + rows_html__MODULE_ID__.join('</tr><tr>') + '</tr></table>';
 		_gel('t__MODULE_ID__').innerHTML = html;
 		
 		// Once all the FetchXmlContent calls return, resize gadget vertically
